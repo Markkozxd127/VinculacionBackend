@@ -85,17 +85,14 @@ public class ConvenioController {
 	}
 	
 	
-	@PutMapping("EdidConv/{id}")
-	public ResponseEntity<?> update(@PathVariable("id") int id, @Valid @RequestBody Convenio convenio){
-		Optional<Convenio> carData = convenioServiceImpl.read(id);
-	      if (carData.isPresent()) {
-	    	  Convenio dbequipo = carData.get();
-	    	  dbequipo.setNombreconvenio(convenio.getNombreconvenio());
-	 
-	        
-	        return new ResponseEntity<Convenio>(convenioServiceImpl.update(dbequipo), HttpStatus.OK);
-	      } else {
-	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	      }
+
+	 @PutMapping("/EdidConv/{id}")
+	    public ResponseEntity<Convenio> updateLibro(@PathVariable("id") int id, @Valid @RequestBody ConvenioDto convenioDto) {
+	        try {
+	        	Convenio updatedConvenio = convenioServiceImpl.update(id, convenioDto);
+	            return new ResponseEntity<>(updatedConvenio, HttpStatus.OK);
+	        } catch (Exception e) {
+	            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	        }
+	    }
 	}
-}

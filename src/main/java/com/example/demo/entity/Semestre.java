@@ -48,5 +48,13 @@ public class Semestre {
 	//RELACION ENTRE SEMESTRE Y PROYECTO 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "semestre")
 	@JsonIgnore
-	private Set<Proyecto>proyectos ;	
+	private Set<Proyecto>proyectos ;
+
+
+	public Semestre(Integer id) {
+		super();
+		this.id = id;
+	}	
+	
+	
 }

@@ -41,7 +41,7 @@ public class Rol_Opciones {
 	private Opciones opciones;
 	
 	@ManyToOne
-	@JoinColumn(name="ID_USUARIO", nullable = false)
+	@JoinColumn(name="ID_ROL", nullable = false)
 	private Rol rol;
 	
 }

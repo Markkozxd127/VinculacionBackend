@@ -46,6 +46,9 @@ public class Equipo {
     @Column(name = "ARCHIVO_INFORME")
  	@NotNull @NotBlank    
      private String archivo_informe;
+    @Column(name = "HORAS")
+ 	@NotNull @NotBlank    
+     private int hora;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "equipos")
 	@JsonIgnore
@@ -55,19 +58,26 @@ public class Equipo {
 	
 	
 	
-//--------BORRAR
 	  // Relación ManyToOne desde Equipo hacia Jornada
-   // @ManyToOne
-  //  @JoinColumn(name = "ID_JORNADA", nullable = false)
-    //private Jornada jornada;
+  @ManyToOne
+    @JoinColumn(name = "ID_JORNADA", nullable = false)
+    private Jornada jornada;
+
+public Equipo(Integer id) {
+	super();
+	this.id = id;
+}
     
+public Equipo(@NotNull @NotBlank String nombre_equipo, @NotNull @NotBlank String archivo_informe,
+		@NotNull @NotBlank int hora, Jornada jornada) {
+	super();
+	this.nombre_equipo = nombre_equipo;
+	this.archivo_informe = archivo_informe;
+	this.hora = hora;
+	this.jornada = jornada;
+} 
     
-    
-    //AGREGAR
-    
-    @ManyToOne
-    @JoinColumn(name = "ID_PROYECTO", nullable = false)
-    private Proyecto proyecto;
+
 
 }
 

@@ -1,9 +1,5 @@
 package com.example.demo.entity;
 
-
-
-
-
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -49,7 +45,10 @@ public class Jornada {
 	@Column(name = "fecha")
 	@NotNull @NotBlank    
     private String fecha;
-
+	
+	@Column(name = "URL")
+	@NotNull @NotBlank    
+    private String URL;
 
 //TODO RELACIONES 	
 
@@ -58,17 +57,19 @@ public class Jornada {
     @JoinColumn(name="ID_PROYECTO", nullable = false)
     private Proyecto proyecto;
 		
-	//--------BORRAR
-    // Relación OneToMany desde Jornada hacia Equipo
-    //@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "jornada")
-    //@JsonIgnore
-    //private Set<Equipo> equipos;
-    
-    
-    //AGREGAR
+	
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "jornada")
     @JsonIgnore
-    private Set<Asistencia> asistencias;
+    private Set<Equipo> equipos;
+
+
+	public Jornada(Integer id) {
+		super();
+		this.id = id;
+	}
+    
+    
+    
 
     
  

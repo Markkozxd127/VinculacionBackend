@@ -115,13 +115,16 @@ public class Proyecto {
 		@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "proyecto")
 		@JsonIgnore
 		private Set<Proyecto_Rol> proyecto_rol;
+
+
+		public Proyecto(Integer id, @NotNull @NotBlank String nombreproyecto) {
+			super();
+			this.id = id;
+			this.nombreproyecto = nombreproyecto;
+		}
 		
 		
-		
-	//AGREGAR
-		@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "proyecto")
-		@JsonIgnore
-		private Set<Equipo> equipos;
+
 
 		
 

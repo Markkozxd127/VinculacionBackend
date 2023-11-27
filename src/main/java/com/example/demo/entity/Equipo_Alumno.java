@@ -16,7 +16,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -37,30 +38,26 @@ public class Equipo_Alumno {
     @SequenceGenerator(name = "seqEquipo_Alumno", allocationSize = 1, sequenceName = "SEQ_EQUIPO_ALUMNO")
     private Integer id;
 	
-	//--------BORRAR
-    //@Column(name = "CALIFICION")
-	//@NotNull @NotBlank    
-   // private String calificacion;
+   @Column(name = "CALIFICION")
+	@NotNull @NotBlank    
+    private String calificacion;
 
-   // @Column(name = "NOTA")
- //	@NotNull @NotBlank     
- //    private String nota;
+    @Column(name = "NOTA")
+ 	@NotNull @NotBlank     
+     private String nota;
     
-	 //@Column(name = "HORAS_REALIZADAS")
-    //@NotNull @NotBlank    
-	 //private String horas_realizadas;
+	 @Column(name = "HORAS_REALIZADAS")
+    @NotNull @NotBlank    
+	 private String horas_realizadas;
     
-	 //   @Column(name = "ESTADOS_REALIZADAS")
-	 //@NotNull @NotBlank    
- 	 //  private String estado_asistencia;
+	    @Column(name = "ESTADOS_REALIZADAS")
+	 @NotNull @NotBlank    
+ 	  private String estado_asistencia;
     
-	 // @Column(name = "ESTADO")
-	 //@NotNull @NotBlank    
-	 //  private String estado;
+	 @Column(name = "ESTADO")
+	 @NotNull @NotBlank    
+	  private String estado;
     
-    
-    
-	
   //TODO RELACIONES 	
     
 	//RELACION DE  EQUIPO_ALUMNO CON EQUIPOS 
@@ -82,11 +79,6 @@ public class Equipo_Alumno {
 
 
 
-	
-	
-	@OneToMany(mappedBy = "equipoAlumno", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JsonIgnore
-	private Set<Asistencia> asistencias;
 
 }
 

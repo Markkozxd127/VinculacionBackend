@@ -54,6 +54,11 @@ public class Convenio {
 		@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "convenio")
 		@JsonIgnore
 		private Set<Proyecto>proyectos ;
+
+		public Convenio(Integer id) {
+			super();
+			this.id = id;
+		}
 		
-	
+		
 }

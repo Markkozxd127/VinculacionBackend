@@ -21,7 +21,8 @@ public class Equipo_AlumnoDto {
      
      private String estado_asistencia;
      
-     
+	  private String estado;
+
      private int equipo;   
 
      private int proyecto_Rol;     // Un campo que representa el tipo de convenio (se espera un entero).

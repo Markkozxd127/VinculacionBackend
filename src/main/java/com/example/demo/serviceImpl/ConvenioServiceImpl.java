@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.dto.ConvenioDto;
 import com.example.demo.entity.Convenio;
 import com.example.demo.entity.Tipo_Convenio;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.ConvenioRepository;
 import com.example.demo.repository.Tipo_ConvenioRepository;
 import com.example.demo.service.ConvenioService;
@@ -24,10 +25,22 @@ public class ConvenioServiceImpl implements ConvenioService<Convenio>{
 	@Autowired
 	private Tipo_ConvenioRepository tipo_ConvenioRepository;
 
+	
+	
 	@Override
-	public Convenio update(Convenio t) {
-		return convenioRepository.save(t);
+	public Convenio update(int id, ConvenioDto convenioDto ) {
+	    Optional<Convenio> optionalConvenio = convenioRepository.findById(id);
+
+	    if (optionalConvenio.isPresent()) {
+	    	Convenio convenio = optionalConvenio.get();
+	    	convenio.setNombreconvenio(convenioDto.getNombreconvenio());
+	    	convenio.setTipo_Convenio(tipo_ConvenioRepository.findById(convenioDto.getTipo_Convenio()).orElse(null));
+	        return convenioRepository.save(convenio);
+	    } else {
+	        throw new ResourceNotFoundException("convenio no encontrado con ID: " + id);
+	    }
 	}
+	
 	@Override
 	public void delete(int id) {
 		convenioRepository.deleteById(id);

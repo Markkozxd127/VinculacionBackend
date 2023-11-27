@@ -7,7 +7,7 @@ import com.example.demo.dto.JornadaDto;
 import com.example.demo.entity.Jornada;
 
 public interface JornadaService  <T>{
-	T update(T t);
+	Jornada update(int id,JornadaDto jornadaDto);
 	void delete(int id);
 	Optional<T> read(int id);
 	List<T> readAll();

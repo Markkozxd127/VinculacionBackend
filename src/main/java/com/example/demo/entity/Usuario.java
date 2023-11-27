@@ -54,9 +54,6 @@ public class Usuario {
 	
 //TODO RELACIONES 	
 	
-	
-	
-
 		//USUARIO OPCIONES
 		@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "usuarios")
 		@JsonIgnore

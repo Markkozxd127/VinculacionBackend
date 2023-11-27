@@ -7,10 +7,10 @@ import com.example.demo.dto.EquipoDto;
 import com.example.demo.entity.Equipo;
 
 public interface EquipoService  <T>{
-	T update(T t);
+	Equipo update(int id,EquipoDto equipoDto);
 	void delete(int id);
 	Optional<T> read(int id);
 	List<T> readAll();
-	Equipo guardarEquipo(EquipoDto equipoDto);
+	void guardarEquipo(EquipoDto equipoDto);
 }	
 

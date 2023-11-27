@@ -55,5 +55,12 @@ public class Escuela_Profecional {
 	@JsonIgnore
 	private Set<Proyecto> proyectos;
 
+	public Escuela_Profecional(Integer id) {
+		super();
+		this.id = id;
+	}
+	
+	
+
     
 }

@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.dto.ProyectoDto;
 import com.example.demo.entity.Convenio;
@@ -12,6 +13,7 @@ import com.example.demo.entity.Escuela_Profecional;
 import com.example.demo.entity.Proyecto;
 import com.example.demo.entity.Semestre;
 import com.example.demo.entity.Tipo_Proyecto;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.ConvenioRepository;
 import com.example.demo.repository.Escuela_ProfecionalRepository;
 import com.example.demo.repository.ProyectoRepository;
@@ -34,10 +36,42 @@ public class ProyectoServiceImpl implements ProyectoService<Proyecto>{
 	private SemestreRepository semestreRepository;
 	@Autowired
 	private Escuela_ProfecionalRepository escuela_ProfecionalRepository;
+	
+	
 	@Override
-	public Proyecto update(Proyecto t) {		
-	return proyectoRepository.save(t);
+	@Transactional
+	public Proyecto update(int id, ProyectoDto proyectoDto ) {
+		System.out.println(id);
+		Proyecto proyecto = new Proyecto();
+		proyecto = proyectoRepository.findById(id)
+	    		.orElseThrow(() -> new EntityNotFoundException("Convenio not found"));
+
+
+	        // Actualiza los campos del libro con los valores del DTO
+	    	proyecto.setNombreproyecto(proyectoDto.getNombreproyecto());
+	    	proyecto.setDescripcion(proyectoDto.getDescripcion());
+	    	proyecto.setFecha_inicio(proyectoDto.getFecha_inicio());
+	    	proyecto.setFecha_fin(proyectoDto.getFecha_fin());
+	    	proyecto.setNumero_bene(proyectoDto.getNumero_bene());
+	    	proyecto.setLocalidad(proyectoDto.getLocalidad());
+	    	proyecto.setObjetivo(proyectoDto.getObjetivo());
+	    	proyecto.setDocumento(proyectoDto.getDocumento());
+	    	proyecto.setEstado(proyectoDto.getEstado());	
+	    	Convenio c = new Convenio(proyectoDto.getConvenio());
+	    	Tipo_Proyecto TP = new Tipo_Proyecto(proyectoDto.getTipo_Proyecto());
+	    	Semestre s = new Semestre(proyectoDto.getSemestre());
+	    	Escuela_Profecional ep = new Escuela_Profecional(proyectoDto.getEscuelaProfecional());
+	        // Actualiza las relaciones con autor, editorial y categoría
+	    	proyecto.setConvenio(c);
+	    	proyecto.setTipo_Proyecto(TP);
+	    	proyecto.setSemestre(s);
+	    	proyecto.setEscuelaProfecional(ep);
+	        // Guarda el libro actualizado en la base de datos
+	        return proyectoRepository.save(proyecto);
 	}
+	
+	
+	
 	@Override
 	public void delete(int id) {
 		proyectoRepository.deleteById(id);
@@ -50,6 +84,11 @@ public class ProyectoServiceImpl implements ProyectoService<Proyecto>{
 	public List<Proyecto> readAll() {
 		return proyectoRepository.findAll();
 	}	
+	
+	public List<Proyecto> findSemesterProyecto(int id_semester){
+		return proyectoRepository.getProyectoBySemestre(id_semester);
+	}
+	
 	@Override
 	public Proyecto guardarProyecto(ProyectoDto proyectoDto) {
 

@@ -28,7 +28,6 @@ import static com.example.demo.commons.GlobalConstans.API_PERSONA;
 @RestController
 @RequestMapping(API_PERSONA)
 @CrossOrigin({"*"})
-
 public class PersonaController {
 	@Autowired
 	private PersonaServiceImpl personaServiceImpl;
@@ -43,6 +42,7 @@ public class PersonaController {
 		      }
 		      return new ResponseEntity<>(alq, HttpStatus.OK);
 		    } catch (Exception e) {
+		      e.printStackTrace();
 		      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		    }
 	}

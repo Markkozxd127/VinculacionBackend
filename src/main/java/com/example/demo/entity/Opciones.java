@@ -41,6 +41,18 @@ public class Opciones{
 	@NotNull @NotBlank    
     private String ruta_accesos;
 	
+	@Column(name = "NOMBRE")
+	@NotNull @NotBlank    
+    private String nombre;
+	
+	@Column(name = "SUBMENU")
+	@NotNull @NotBlank    
+    private int id_submenu;
+	
+	@Column(name = "MODULO")
+	@NotNull @NotBlank    
+    private int modulo;
+	
 		
 //TODO RELACIONES 	
 

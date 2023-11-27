@@ -12,7 +12,10 @@ import com.example.demo.serviceImpl.ProyectoServiceImpl;
 
 import jakarta.validation.Valid;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -32,7 +35,6 @@ import static com.example.demo.commons.GlobalConstans.API_JORNADA;
 @RestController
 @RequestMapping(API_JORNADA)
 @CrossOrigin({"*"})
-
 public class JornadaController {
 	@Autowired
 	private JornadaServiceImpl jornadaServiceImpl;
@@ -52,22 +54,46 @@ public class JornadaController {
 		    }
 	}
 	
+	@GetMapping("/searchByProyecto/{id}")
+	public ResponseEntity<List<Map<String, Object>>> jornadaByProyecto(@PathVariable("id") int id) {
+		try {
+			List<Map<String, Object>> alq = jornadaServiceImpl.searchByProyectoJornada(id);
+		      return new ResponseEntity<>(alq, HttpStatus.OK);
+		    } catch (Exception e) {
+		      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		    }
+	}
+	
 	@GetMapping("/ListJornadas/{idProyecto}")
-	public ResponseEntity<Set<Jornada>> listarJornadasPorProyecto(@PathVariable("idProyecto") int idProyecto) {
+	public ResponseEntity<List<Map<String, Object>>> listarJornadasPorProyecto(@PathVariable("idProyecto") int idProyecto) {
 	    try {
-	        Optional<Proyecto> proyecto = proyectoServiceImpl.read(idProyecto);
-	        if (proyecto.isPresent()) {
-	            Set<Jornada> jornadas = proyecto.get().getJornadas();
-	            return new ResponseEntity<>(jornadas, HttpStatus.OK);
+	    	System.out.println(idProyecto);
+	    	List<Map<String, Object>> list = jornadaServiceImpl.buscarPorProyecto(idProyecto);
+	        if (list.isEmpty()) {
+	            return new ResponseEntity<>(Collections.emptyList(),HttpStatus.NO_CONTENT);
 	        } else {
-	            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	        	return new ResponseEntity<>(list, HttpStatus.OK);
+	        }
+	    } catch (Exception e) {
+	        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
+	}
+	
+	@GetMapping("/ListJornadasPersonas/{id}")
+	public ResponseEntity<List<Map<String, Object>>> listarJornadasPorPersonas(@PathVariable("id") int id) {
+	    try {
+	    	List<Map<String, Object>> list = jornadaServiceImpl.searchByPersona(id);
+	        if (list.isEmpty()) {
+	            return new ResponseEntity<>(Collections.emptyList(),HttpStatus.NO_CONTENT);
+	        } else {
+	        	return new ResponseEntity<>(list, HttpStatus.OK);
 	        }
 	    } catch (Exception e) {
 	        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 	    }
 	}
 
-	@GetMapping("BuscarJor/{id}")
+	@GetMapping("/BuscarJor/{id}")
 	public ResponseEntity<Jornada> getJornadaById(@PathVariable("id") int id){
 		Optional<Jornada> carData = jornadaServiceImpl.read(id);
 	    if (carData.isPresent()) {
@@ -81,6 +107,7 @@ public class JornadaController {
 	@PostMapping("/Insertjornadas")
 	public ResponseEntity<Jornada> crear(@Valid @RequestBody JornadaDto jornadaDto) {
 	    try {
+	    	System.out.println(jornadaDto.getURL());
 	        Jornada _alq = jornadaServiceImpl.guardarJornada(jornadaDto);
 	        return new ResponseEntity<>(_alq, HttpStatus.CREATED);
 	    } catch (Exception e) {
@@ -91,7 +118,7 @@ public class JornadaController {
 
 	
 
-	@DeleteMapping("DeleteJor/{id}")
+	@DeleteMapping("/DeleteJor/{id}")
 	public ResponseEntity<Jornada> delete(@PathVariable("id") int id){
 		try {
 			jornadaServiceImpl.delete(id);
@@ -101,18 +128,15 @@ public class JornadaController {
 	      }
 	}
 	
+
 	
-	@PutMapping("EdidJor/{id}")
-	public ResponseEntity<?> update(@PathVariable("id") int id, @Valid @RequestBody Jornada jornada){
-		Optional<Jornada> carData = jornadaServiceImpl.read(id);
-	      if (carData.isPresent()) {
-	    	  Jornada dbjornada = carData.get();
-	    	  dbjornada.setNombreJornada(jornada.getNombreJornada());
-	    	  dbjornada.setFecha(jornada.getFecha());
-	     
-	        return new ResponseEntity<Jornada>(jornadaServiceImpl.update(dbjornada), HttpStatus.OK);
-	      } else {
-	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	      }
-	}
+    @PutMapping("/EdidJor/{id}")
+    public ResponseEntity<Jornada> updateJornada(@PathVariable("id") int id, @Valid @RequestBody JornadaDto jornadaDto) {
+        try {
+        	Jornada updatedJornada = jornadaServiceImpl.update(id, jornadaDto);
+            return new ResponseEntity<>(updatedJornada, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

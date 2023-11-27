@@ -5,6 +5,7 @@ package com.example.demo.entity;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -13,7 +14,10 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -48,6 +52,10 @@ public class Alumno {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "alumnos")
 	@JsonIgnore
 	private Set<Equipo_Alumno> equipo_alumnos;
+	
+	@OneToOne
+	@JoinColumn(name = "PERSONA_ID", referencedColumnName = "ID_PERSONA")
+	private Persona persona;
 	
     // Relación uno a uno con Persona
     //@OneToOne

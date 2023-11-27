@@ -45,5 +45,11 @@ public class Tipo_Proyecto {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "tipo_Proyecto")
 	@JsonIgnore
 	private Set<Proyecto> proyectos;
+
+	public Tipo_Proyecto(Integer id) {
+		super();
+		this.id = id;
+	}
+	
 	
 }

@@ -11,6 +11,7 @@ import com.example.demo.serviceImpl.EquipoServiceImpl;
 import jakarta.validation.Valid;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +49,21 @@ public class EquipoController {
 		    }
 	}
 	
+	@GetMapping("/ListEquiJor/{id}")
+	public ResponseEntity<List<Equipo>> listarEquipoByJornada(@PathVariable("id") int id) {
+		try {
+		      List<Equipo> alq = equipoServiceImpl.getEquipoByJornada(id);
+		      if (alq.isEmpty()) {
+		        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		      }
+		      return new ResponseEntity<>(alq, HttpStatus.OK);
+		    } catch (Exception e) {
+		      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		    }
+	}
 	
-	@GetMapping("BuscarEqui/{id}")
+	
+	@GetMapping("/BuscarEqui/{id}")
 	public ResponseEntity<Equipo> getEquipoById(@PathVariable("id") int id){
 		Optional<Equipo> carData = equipoServiceImpl.read(id);
 	    if (carData.isPresent()) {
@@ -59,13 +73,20 @@ public class EquipoController {
 	    }
 	}
 	
+	@GetMapping("/informe/{id}")
+	public ResponseEntity<List<Map<String, Object>>> getInforme(@PathVariable("id") int id){
+		List<Map<String, Object>> carData = equipoServiceImpl.getInforme(id);
+		return new ResponseEntity<>(carData, HttpStatus.OK);
+	}
+	
 	
 	@PostMapping("/InsertEqui")
-    public ResponseEntity<Equipo> crear(@Valid @RequestBody EquipoDto equipoDto){
+    public ResponseEntity<Integer> crear(@RequestBody EquipoDto equipoDto){
         try {
-        	Equipo _alq = equipoServiceImpl.guardarEquipo(equipoDto);
-            return new ResponseEntity<Equipo>(_alq, HttpStatus.CREATED);
+        	equipoServiceImpl.guardarEquipo(equipoDto);
+            return new ResponseEntity<Integer>(1, HttpStatus.CREATED);
           } catch (Exception e) {
+        	  System.out.println(e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
           }
     }
@@ -81,19 +102,13 @@ public class EquipoController {
 	      }
 	}
 	
-	
-	@PutMapping("EdidEqui/{id}")
-	public ResponseEntity<?> updateCarrera(@PathVariable("id") int id, @Valid @RequestBody Equipo equipo){
-		Optional<Equipo> carData = equipoServiceImpl.read(id);
-	      if (carData.isPresent()) {
-	    	  Equipo dbequipo = carData.get();
-	    	  dbequipo.setNombre_equipo(equipo.getNombre_equipo());
-	    	  dbequipo.setArchivo_informe(equipo.getArchivo_informe());
-
-	        
-	        return new ResponseEntity<Equipo>(equipoServiceImpl.update(dbequipo), HttpStatus.OK);
-	      } else {
-	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	      }
+	 @PutMapping("/EdidEqui/{id}")
+	    public ResponseEntity<Equipo> updateEquipo(@PathVariable("id") int id, @Valid @RequestBody EquipoDto equipoDto) {
+	        try {
+	        	Equipo updatedEquipo = equipoServiceImpl.update(id, equipoDto);
+	            return new ResponseEntity<>(updatedEquipo, HttpStatus.OK);
+	        } catch (Exception e) {
+	            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	        }
+	    }
 	}
-}

@@ -7,7 +7,8 @@ import com.example.demo.dto.ConvenioDto;
 import com.example.demo.entity.Convenio;
 
 public interface ConvenioService  <T>{
-	T update(T t);
+	
+	Convenio update(int id,ConvenioDto convenioDto);
 	void delete(int id);
 	Optional<T> read(int id);
 	List<T> readAll();

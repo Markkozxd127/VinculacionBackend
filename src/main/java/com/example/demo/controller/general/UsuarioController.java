@@ -10,6 +10,7 @@ import com.example.demo.serviceImpl.UsuarioServiceImpl;
 import jakarta.validation.Valid;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,33 @@ public class UsuarioController {
 	@Autowired
 	private UsuarioServiceImpl usuarioServiceImpl;
 	
+	
+	@GetMapping("/initSesion/{user}/{pass}")
+	public ResponseEntity<List<Map<String, Object>>> listarModulos(@PathVariable("user") String user,@PathVariable("pass") String pass ) {
+		try {
+			  System.out.println(user +" "+ pass);
+		      List<Map<String, Object>> modulos = usuarioServiceImpl.getInitSesion(user,pass); 
+		      if (modulos.isEmpty()) {
+		        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		      }
+		      return new ResponseEntity<>(modulos, HttpStatus.OK);
+		    } catch (Exception e) {
+		      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		    }
+	}
+	
+	@GetMapping("/modules/{id}")
+	public ResponseEntity<List<Map<String, Object>>> listarModulesRol(@PathVariable("id") int id) {
+		try {
+		      List<Map<String, Object>> modulos = usuarioServiceImpl.getModules(id); 
+		      if (modulos.isEmpty()) {
+		        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		      }
+		      return new ResponseEntity<>(modulos, HttpStatus.OK);
+		    } catch (Exception e) {
+		      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		    }
+	}
 	
 	@GetMapping("/ListUser")
 	public ResponseEntity<List<Usuario>> listar() {

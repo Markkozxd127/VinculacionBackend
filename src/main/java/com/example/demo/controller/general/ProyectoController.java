@@ -82,6 +82,16 @@ public class ProyectoController {
 	    }
 	}
 	
+	@GetMapping("/Semester/{id_semestre}")
+	public ResponseEntity<List<Proyecto>> getSemestreProyecto(@PathVariable("id_semestre") int id_semestre){
+		List<Proyecto> carData = proyectoServiceImpl.findSemesterProyecto(id_semestre);
+	    if (carData.isEmpty()) {
+	      return new ResponseEntity<>(carData, HttpStatus.OK);
+	    } else {
+	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    }
+	}
+	
 	@PostMapping("/InsertProyecto")
     public ResponseEntity<Proyecto> crear(@Valid @RequestBody ProyectoDto proyectoDto){
         try {
@@ -108,26 +118,14 @@ public class ProyectoController {
 	}
 	
 	
-	@PutMapping("EdidProyecto/{id}")
-	public ResponseEntity<?> updateCarrera(@PathVariable("id") int id, @Valid @RequestBody Proyecto proyecto){
-		Optional<Proyecto> carData = proyectoServiceImpl.read(id);
-	      if (carData.isPresent()) {
-	    	  Proyecto dbproyecto = carData.get();
-	    	  
-	    	  dbproyecto.setNombreproyecto(proyecto.getNombreproyecto());
-	    	  dbproyecto.setDescripcion(proyecto.getDescripcion());
-	    	  dbproyecto.setFecha_inicio(proyecto.getFecha_inicio());
-	    	  dbproyecto.setFecha_fin(proyecto.getFecha_fin());
-	    	  dbproyecto.setNumero_bene(proyecto.getNumero_bene());
-	    	  dbproyecto.setLocalidad(proyecto.getLocalidad());
-	    	  dbproyecto.setObjetivo(proyecto.getObjetivo());
-	    	  dbproyecto.setDocumento(proyecto.getDocumento());
-	    	  dbproyecto.setEstado(proyecto.getEstado());
 
-	        
-	        return new ResponseEntity<Proyecto>(proyectoServiceImpl.update(dbproyecto), HttpStatus.OK);
-	      } else {
-	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	      }
-	}
+	@PutMapping("/EdidProyecto/{id}")
+    public ResponseEntity<Proyecto> updatedProyecto(@PathVariable("id") int id, @Valid @RequestBody ProyectoDto proyectoDto) {
+        try {
+        	Proyecto updatedProyecto= proyectoServiceImpl.update(id, proyectoDto);
+            return new ResponseEntity<>(updatedProyecto, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Tipo_Proyecto;
-import com.example.demo.repository.SemestreRepository;
 import com.example.demo.repository.Tipo_ProyectoRepository;
 import com.example.demo.service.Tipo_ProyectoService;
 

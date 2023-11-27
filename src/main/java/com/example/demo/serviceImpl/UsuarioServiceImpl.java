@@ -1,11 +1,10 @@
 package com.example.demo.serviceImpl;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.example.demo.entity.Usuario;
 import com.example.demo.repository.UsuarioRepository;
 import com.example.demo.service.UsuarioService;
@@ -45,5 +44,12 @@ public class UsuarioServiceImpl implements UsuarioService<Usuario>{
 		// TODO Auto-generated method stub
 		return usuarioRepository.findAll();
 	}
-
+	
+	public List<Map<String, Object>> getInitSesion(String user,String pass){
+		return usuarioRepository.getInitSesion(user, pass);
+	}
+	
+	public List<Map<String, Object>> getModules(int id){
+		return usuarioRepository.getModules(id);
+	}
 }
