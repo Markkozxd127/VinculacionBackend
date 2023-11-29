@@ -7,7 +7,9 @@ import com.example.demo.dto.Equipo_AlumnoDto;
 import com.example.demo.entity.Equipo_Alumno;
 
 public interface Equipo_AlumnoService  <T>{
+	//Equipo_Alumno update(int id,Equipo_AlumnoDto equipo_AlumnoDto);
 	T update(T t);
+
 	void delete(int id);
 	Optional<T> read(int id);
 	List<T> readAll();

@@ -4,8 +4,12 @@ package com.example.demo.controller.general;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.EquipoAlumnoDTOEDIT;
 import com.example.demo.dto.Equipo_AlumnoDto;
+import com.example.demo.dto.ProyectoDto;
+import com.example.demo.entity.Equipo;
 import com.example.demo.entity.Equipo_Alumno;
+import com.example.demo.entity.Proyecto;
 import com.example.demo.serviceImpl.Equipo_AlumnoServiceImpl;
 
 import jakarta.validation.Valid;
@@ -87,20 +91,46 @@ public class Equipo_AlumnoController {
 	}
 	
 	
-	@PutMapping("EdidAlumno/{id}")
-	public ResponseEntity<?> update(@PathVariable("id") int id, @Valid @RequestBody Equipo_Alumno equipoa){
-		Optional<Equipo_Alumno> carData = equipo_AlumnoServiceImpl.read(id);
-	      if (carData.isPresent()) {
-	    	  
-	    	  Equipo_Alumno dbequipoa = carData.get();
-	    
+	//@PutMapping("EdidAlumno/{id}")
+	//public ResponseEntity<?> update(@PathVariable("id") int id, @Valid @RequestBody Equipo_Alumno equipoa){
+	//	Optional<Equipo_Alumno> carData = equipo_AlumnoServiceImpl.read(id);
+	//     if (carData.isPresent()) {
+	//    	  
+	//    	  Equipo_Alumno dbequipoa = carData.get();    
+	//        return new ResponseEntity<Equipo_Alumno>(equipo_AlumnoServiceImpl.update(dbequipoa), HttpStatus.OK);
+	//      } else {
+	//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	//      }
+	//}
+	
+	
+	
+	
+	//@PutMapping("equipoAlumno/{id}")
+	//public ResponseEntity updateEquipoAlumno(@PathVariable("id") int id, @Valid @RequestBody EquipoAlumnoDTOEDIT equipoDto) {
+	//    try {
+	//        System.out.println(equipoDto);
+	 //       equipo_AlumnoServiceImpl.update(equipoDto, id);
+	 //       return new ResponseEntity(HttpStatus.OK);
+	//    } catch (Exception e) {
+	//        e.printStackTrace(); // Imprime la traza de la excepción
+	  //      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	  //  }
+	//}
+
+	
+	@PutMapping("equipoAlumno/{id}")
+	public ResponseEntity updateEquipoAlumno(@PathVariable("id") int id, @Valid @RequestBody EquipoAlumnoDTOEDIT equipoDto) {
+	    try {
+	        System.out.println(equipoDto);
+	        equipo_AlumnoServiceImpl.update(equipoDto, id);
+	        return new ResponseEntity(HttpStatus.OK);
+	    } catch (Exception e) {
+	        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
+	}
+
 
 	 
 
-	        
-	        return new ResponseEntity<Equipo_Alumno>(equipo_AlumnoServiceImpl.update(dbequipoa), HttpStatus.OK);
-	      } else {
-	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	      }
-	}
 }

@@ -32,7 +32,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @Table(name="EQUIPO")
-public class Equipo {
+public class Equipo{
 	@Id
 	@Column(name = "ID_EQUIPO")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqEquipo")

@@ -4,6 +4,7 @@ package com.example.demo.controller.general;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.EquipoAlumnoDTOEDIT;
 import com.example.demo.dto.EquipoDto;
 import com.example.demo.entity.Equipo;
 import com.example.demo.serviceImpl.EquipoServiceImpl;

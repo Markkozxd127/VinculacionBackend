@@ -68,13 +68,10 @@ public class Proyecto_RolServiceImpl implements Proyecto_RolService<Proyecto_Rol
 	     Proyecto_Rol proyecto_Rol = new Proyecto_Rol();
 	    //atri
 	     proyecto_Rol.setHoras(proyecto_RolDto.getHoras());
-	    
 	    //atri
-	     proyecto_Rol.setDetalles(proyecto_RolDto.getDetalles());
-	    
+	     proyecto_Rol.setDetalles(proyecto_RolDto.getDetalles());	    
 	    //fora
-	     proyecto_Rol.setProyecto(proyecto);
-	    
+	     proyecto_Rol.setProyecto(proyecto);	    
 	    
 	    //fora
 	     proyecto_Rol.setRoldeAlumno(roldeAlumno);
