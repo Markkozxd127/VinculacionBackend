@@ -30,3 +30,4 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
 	List<Map<String, Object>> getModules(int id);
 	
 }
+

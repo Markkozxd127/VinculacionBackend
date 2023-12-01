@@ -44,7 +44,7 @@ public class UsuarioServiceImpl implements UsuarioService<Usuario>{
 		// TODO Auto-generated method stub
 		return usuarioRepository.findAll();
 	}
-	
+	// métodos q llaman a los métodos correspondientes en tu usuarioRepository 
 	public List<Map<String, Object>> getInitSesion(String user,String pass){
 		return usuarioRepository.getInitSesion(user, pass);
 	}

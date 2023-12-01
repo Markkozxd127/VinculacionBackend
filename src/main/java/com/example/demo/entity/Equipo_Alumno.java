@@ -38,7 +38,7 @@ public class Equipo_Alumno {
     @SequenceGenerator(name = "seqEquipo_Alumno", allocationSize = 1, sequenceName = "SEQ_EQUIPO_ALUMNO")
     private Integer id;
 	
-   @Column(name = "CALIFICION")
+   @Column(name = "CALIFICACION")
 	@NotNull @NotBlank    
     private String calificacion;
 
@@ -50,7 +50,7 @@ public class Equipo_Alumno {
     @NotNull @NotBlank    
 	 private String horas_realizadas;
     
-	    @Column(name = "ESTADOS_REALIZADAS")
+	    @Column(name = "ESTADO_ASISTENCIA")
 	 @NotNull @NotBlank    
  	  private String estado_asistencia;
     

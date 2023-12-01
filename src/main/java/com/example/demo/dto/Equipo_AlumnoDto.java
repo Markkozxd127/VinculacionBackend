@@ -27,7 +27,7 @@ public class Equipo_AlumnoDto {
 
      private int proyecto_Rol;     // Un campo que representa el tipo de convenio (se espera un entero).
 
-     private int alumno ;     
+     private int alumno;     
      
      // Un campo que representa el tipo de convenio (se espera un entero).
 // Un campo que representa el tipo de convenio (se espera un entero).

@@ -5,12 +5,20 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.dto.EquipoAlumnoDTOEDIT;
 import com.example.demo.dto.Equipo_AlumnoDto;
 import com.example.demo.entity.Alumno;
+import com.example.demo.entity.Convenio;
 import com.example.demo.entity.Equipo;
 import com.example.demo.entity.Equipo_Alumno;
+import com.example.demo.entity.Escuela_Profecional;
+import com.example.demo.entity.Proyecto;
 import com.example.demo.entity.Proyecto_Rol;
+import com.example.demo.entity.Semestre;
+import com.example.demo.entity.Tipo_Proyecto;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.AlumnoRepository;
 import com.example.demo.repository.EquipoRepository;
 import com.example.demo.repository.Equipo_AlumnoRepository;
@@ -32,9 +40,42 @@ public class Equipo_AlumnoServiceImpl implements Equipo_AlumnoService<Equipo_Alu
 
 	@Override
 	public Equipo_Alumno update(Equipo_Alumno t) {
-		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	//@Override
+	//	public Equipo_Alumno update(int id, Equipo_AlumnoDto equipo_AlumnoDto) {
+	//    Optional<Equipo_Alumno> optionalLibro = equipo_AlumnoRepository.findById(id);
+
+	//    if (optionalLibro.isPresent()) {
+	    	//	    	Equipo_Alumno libro = optionalLibro.get();
+
+	//        // Actualiza los campos del libro con los valores del DTO
+	//        libro.setCalificacion(equipo_AlumnoDto.getCalificacion());
+	    	//        libro.setNota(equipo_AlumnoDto.getNota());
+	    	//        libro.setHoras_realizadas(equipo_AlumnoDto.getHoras_realizadas());
+	    	//        libro.setEstado_asistencia(equipo_AlumnoDto.getEstado_asistencia());
+	    	//        libro.setEstado(equipo_AlumnoDto.getEstado());
+
+	        // Actualiza las relaciones con autor, editorial y categoría
+	//        libro.setEquipo(equipoRepository.findById(equipo_AlumnoDto.getEquipo()).orElse(null));
+	//      libro.setProyecto_Rol(proyecto_RolRepository.findById(equipo_AlumnoDto.getProyecto_Rol()).orElse(null));
+	//      libro.setAlumno(alumnoRepository.findById(equipo_AlumnoDto.getAlumno()).orElse(null));
+	    	//
+	        // Guarda el libro actualizado en la base de datos
+	//    return equipo_AlumnoRepository.save(libro);
+	    	//    } else {
+	//      throw new ResourceNotFoundException("Libro no encontrado con ID: " + id);
+	    	//  }
+	//}
+	
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	public void delete(int id) {
 		// TODO Auto-generated method stub		
@@ -58,15 +99,9 @@ public class Equipo_AlumnoServiceImpl implements Equipo_AlumnoService<Equipo_Alu
 		            .orElseThrow(() -> new EntityNotFoundException("Alumno not found"));		 
 		Proyecto_Rol proyecto_Rol = proyecto_RolRepository.findById(equipo_AlumnoDto.getProyecto_Rol())
 		            .orElseThrow(() -> new EntityNotFoundException("Proyecto_Rol not found"));
-		 
-		 
-	    
-	 
-		
+
 		Equipo_Alumno equipo_Alumno = new Equipo_Alumno();
-	    //atri
-	
-	    
+	    //atri	    
 	    //fora		
 		equipo_Alumno.setProyecto_Rol(proyecto_Rol);
 		equipo_Alumno.setEquipos(equipo);
@@ -74,6 +109,11 @@ public class Equipo_AlumnoServiceImpl implements Equipo_AlumnoService<Equipo_Alu
 
 	    return equipo_AlumnoRepository.save(equipo_Alumno);
 	}
-	
+    @Transactional
+    public void update(EquipoAlumnoDTOEDIT dto, int id) {
+        equipo_AlumnoRepository.updateEquipoAlumno(dto.getCalificacion(), dto.getEstado(), dto.getEstado_asistencia(),
+                dto.getHoras_realizadas(), dto.getNota(), id);
+    }
+
 
 }

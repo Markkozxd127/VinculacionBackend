@@ -34,7 +34,7 @@ public class UsuarioController {
 	@Autowired
 	private UsuarioServiceImpl usuarioServiceImpl;
 	
-	
+	//Este método recibe dos parámetros de la URL (user y pass) mediante la anotación @PathVariable.
 	@GetMapping("/initSesion/{user}/{pass}")
 	public ResponseEntity<List<Map<String, Object>>> listarModulos(@PathVariable("user") String user,@PathVariable("pass") String pass ) {
 		try {
@@ -48,6 +48,9 @@ public class UsuarioController {
 		      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		    }
 	}
+	
+	//Llama al método getModules del usuarioServiceImpl para obtener información relacionada con los
+	//módulos asociados a un usuario basada en el ID de la persona.
 	
 	@GetMapping("/modules/{id}")
 	public ResponseEntity<List<Map<String, Object>>> listarModulesRol(@PathVariable("id") int id) {
@@ -116,10 +119,7 @@ public class UsuarioController {
 	    	  Usuario dbequipo = carData.get();
 	    	  dbequipo.setNombre_user(usuario.getNombre_user());
 	    	  dbequipo.setContraseña(usuario.getContraseña());
-	    	  dbequipo.setImg_perfil(usuario.getImg_perfil());
-
-	 
-	        
+	    	  dbequipo.setImg_perfil(usuario.getImg_perfil());	        
 	        return new ResponseEntity<Usuario>(usuarioServiceImpl.update(dbequipo), HttpStatus.OK);
 	      } else {
 	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -17,7 +17,7 @@ public interface EquipoRepository extends JpaRepository<Equipo, Integer>{
 			+ "where  j.id_jornada=?", nativeQuery = true)
 	List<Equipo> getEquipos(int id);
 	
-	@Query(value = "SELECT P.NOMBRE, P.APELLIDO, RA.NOMBRE_ROL ,EA.NOTA, EA.CALIFICION,EA.HORAS_REALIZADAS,EA.ESTADO,EA.ESTADOS_REALIZADAS\r\n"
+	@Query(value = "SELECT EA.ID_EQUIPO_ALUMNO,P.NOMBRE, P.APELLIDO, RA.NOMBRE_ROL ,EA.NOTA, EA.CALIFICACION,EA.HORAS_REALIZADAS,EA.ESTADO,EA.ESTADO_ASISTENCIA\r\n"
 			+ "FROM JORNADA J\r\n"
 			+ "JOIN EQUIPO E ON J.ID_JORNADA = E.ID_JORNADA\r\n"
 			+ "JOIN EQUIPO_ALUMNO EA ON EA.ID_EQUIPO = E.ID_EQUIPO\r\n"
@@ -33,5 +33,5 @@ public interface EquipoRepository extends JpaRepository<Equipo, Integer>{
 void insertEquipo(@Param("archivo") String archivo, @Param("nombreEquipo") String nombre_equipo, 
                   @Param("idJornada") int id_jornada, @Param("horas") int horas);
 
-	
+
 }

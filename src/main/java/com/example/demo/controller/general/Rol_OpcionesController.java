@@ -4,6 +4,9 @@ package com.example.demo.controller.general;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.ConvenioDto;
+import com.example.demo.dto.Rol_OpcionesDto;
+import com.example.demo.entity.Convenio;
 import com.example.demo.entity.Rol_Opciones;
 import com.example.demo.serviceImpl.Rol_OpcionesServiceImpl;
 
@@ -60,9 +63,9 @@ public class Rol_OpcionesController {
 	
 	
 	@PostMapping("/InsertRolopc")
-    public ResponseEntity<Rol_Opciones> crear(@Valid @RequestBody Rol_Opciones rolopc){
+    public ResponseEntity<Rol_Opciones> crear(@Valid @RequestBody Rol_OpcionesDto rol_OpcionesDto){
         try {
-        	Rol_Opciones _alq = rol_OpcionesServiceImpl.create(rolopc);
+        	Rol_Opciones _alq = rol_OpcionesServiceImpl.guardarRol_Opciones(rol_OpcionesDto);
             return new ResponseEntity<Rol_Opciones>(_alq, HttpStatus.CREATED);
           } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -81,16 +84,26 @@ public class Rol_OpcionesController {
 	}
 	
 	
-	@PutMapping("EdidRolopc/{id}")
-	public ResponseEntity<?> update(@PathVariable("id") int id, @Valid @RequestBody Rol_Opciones rolopc){
-		Optional<Rol_Opciones> carData = rol_OpcionesServiceImpl.read(id);
-	      if (carData.isPresent()) {
-	    	  Rol_Opciones dbrolopc = carData.get();
+	//@PutMapping("EdidRolopc/{id}")
+	//public ResponseEntity<?> update(@PathVariable("id") int id, @Valid @RequestBody Rol_Opciones rolopc){
+		//Optional<Rol_Opciones> carData = rol_OpcionesServiceImpl.read(id);
+	      //if (carData.isPresent()) {
+	    	//  Rol_Opciones dbrolopc = carData.get();
 	 
 	        
-	        return new ResponseEntity<Rol_Opciones>(rol_OpcionesServiceImpl.update(dbrolopc), HttpStatus.OK);
-	      } else {
-	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	      }
-	}
+	     //   return new ResponseEntity<Rol_Opciones>(rol_OpcionesServiceImpl.update(dbrolopc), HttpStatus.OK);
+	     // } else {
+	       // return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    //  }
+	//}
+	
+	 @PutMapping("/EdidRolopc/{id}")
+	    public ResponseEntity<Rol_Opciones> updateLibro(@PathVariable("id") int id, @Valid @RequestBody Rol_OpcionesDto rol_OpcionesDto) {
+	        try {
+	        	Rol_Opciones updatedRol_Opciones = rol_OpcionesServiceImpl.update(id, rol_OpcionesDto);
+	            return new ResponseEntity<>(updatedRol_Opciones, HttpStatus.OK);
+	        } catch (Exception e) {
+	            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	        }
+	    }
 }
